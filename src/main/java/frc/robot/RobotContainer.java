@@ -13,8 +13,12 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.controller.PIDController;
+import frc.robot.Constants.FlywheelConstants;
 import frc.robot.oi.DriverControls;
 import frc.robot.oi.DriverControlsXbox;
+import frc.robot.subsystems.Flywheel;
+import frc.robot.subsystems.FlywheelIONeo;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -24,10 +28,8 @@ import frc.robot.oi.DriverControlsXbox;
  */
 @SuppressWarnings("unused")
 public class RobotContainer {
-  // For instructions on how to implement this class, refer to the README.md file
-
   // Subsystems
-  // TODO: Implement the flywheel subsystem
+  private Flywheel m_flywheel;
 
   // Controller
   private DriverControls m_driverControls;
@@ -40,7 +42,11 @@ public class RobotContainer {
   }
 
   private void configureSubsystems() {
-    // TODO: Implement this method
+    // this self-explanatory
+    m_flywheel =
+        new Flywheel(
+            new FlywheelIONeo(FlywheelConstants.kMotorPort),
+            new PIDController(FlywheelConstants.kP, FlywheelConstants.kI, FlywheelConstants.kD));
   }
 
   private void configureControllers() {
@@ -48,6 +54,12 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    // TODO: Implement this method
+    // from README:
+    // "Each of these commands should be run a single time when the button is pressed or released."
+    // so use onTrue and onFalse
+    m_driverControls
+        .runFlywheel()
+        .onTrue(m_flywheel.setDesiredVelocityCommand(FlywheelConstants.kVelocitySetpoint))
+        .onFalse(m_flywheel.setDesiredVelocityCommand(0));
   }
 }
