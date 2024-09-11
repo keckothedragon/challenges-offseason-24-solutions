@@ -1,15 +1,21 @@
 package frc.robot.subsystems.intake.rollers;
 
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
+import frc.robot.Constants.IntakeConstants;
 
 public class RollerIOSim implements RollerIO {
-  // For instructions on how to implement this class, refer to the README.md file
-
   private DCMotorSim m_sim;
-  // define more members here as necessary
+
+  // store voltage as variable since sim doesn't have method to get voltage
+  private double m_voltage;
 
   public RollerIOSim() {
-    // TODO: Implement this constructor
+    DCMotor gearbox = DCMotor.getKrakenX60(1);
+    double gearing = IntakeConstants.kRollerGearing;
+    double jKgMetersSquared = IntakeConstants.kRollerJKgMetersSquared;
+
+    m_sim = new DCMotorSim(gearbox, gearing, jKgMetersSquared);
   }
 
   @Override
@@ -22,18 +28,17 @@ public class RollerIOSim implements RollerIO {
 
   @Override
   public void setVoltage(double voltage) {
-    // TODO: Implement this method
+    m_sim.setInputVoltage(voltage);
+    m_voltage = voltage;
   }
 
   @Override
   public double getVoltage() {
-    // TODO: Implement this method
-    return 0.0;
+    return m_voltage;
   }
 
   @Override
   public double getVelocityRadPerSec() {
-    // TODO: Implement this method
-    return 0.0;
+    return m_sim.getAngularVelocityRadPerSec();
   }
 }

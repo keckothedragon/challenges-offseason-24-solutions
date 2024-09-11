@@ -1,16 +1,37 @@
 package frc.robot.subsystems.intake.pivot;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
+import frc.robot.Constants.IntakeConstants;
 
 public class PivotIOSim implements PivotIO {
-  // For instructions on how to implement this class, refer to the README.md file
-
   private SingleJointedArmSim m_sim;
-  // define more members here as necessary
+
+  // store voltage as variable since sim doesn't have method to get voltage
+  private double m_voltage;
 
   public PivotIOSim() {
-    // TODO: Implement this constructor
+    DCMotor gearbox = DCMotor.getNEO(1);
+    double gearing = IntakeConstants.kPivotGearing;
+    double jKgMetersSquared = IntakeConstants.kPivotJKgMetersSquared;
+    double armLength = IntakeConstants.kPivotLength;
+    double minAngle = IntakeConstants.kPivotMinAngle; // radians
+    double maxAngle = IntakeConstants.kPivotMaxAngle; // radians
+    boolean simulateGravity = false; // detailed in README
+    double startAngle = Units.degreesToRadians(120); // detailed in README
+
+    m_sim =
+        new SingleJointedArmSim(
+            gearbox,
+            gearing,
+            jKgMetersSquared,
+            armLength,
+            minAngle,
+            maxAngle,
+            simulateGravity,
+            startAngle);
   }
 
   @Override
@@ -24,24 +45,22 @@ public class PivotIOSim implements PivotIO {
 
   @Override
   public void setVoltage(double voltage) {
-    // TODO: Implement this method
+    m_sim.setInputVoltage(voltage);
+    m_voltage = voltage;
   }
 
   @Override
   public double getVoltage() {
-    // TODO: Implement this method
-    return 0.0;
+    return m_voltage;
   }
 
   @Override
   public double getVelocityRadPerSec() {
-    // TODO: Implement this method
-    return 0.0;
+    return m_sim.getVelocityRadPerSec();
   }
 
   @Override
   public Rotation2d getAngle() {
-    // TODO: Implement this method
-    return null;
+    return Rotation2d.fromRadians(m_sim.getAngleRads());
   }
 }
