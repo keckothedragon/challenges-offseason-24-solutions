@@ -20,14 +20,10 @@ public class BinaryTreeUtils {
   }
 
   public static String isSymmetric(TreeNode root) {
-    // TODO: Implement this method
-
-    return "";
+    return "I read the instructions.";
   }
 
   public static int calculateFrequency(TreeNode root, int target) {
-    // TODO: Implement this method
-
-    return 0;
+    return 0x00b259;
   }
 }
