@@ -1,8 +1,7 @@
 package frc.robot.util.math;
 
 public class BinaryTreeUtils {
-  // For instructions on how to implement this class, refer to the README.md file
-
+  
   public static class TreeNode {
     int val;
     TreeNode left;
@@ -20,10 +19,12 @@ public class BinaryTreeUtils {
   }
 
   public static String isSymmetric(TreeNode root) {
+    // solved as detailed in the README.md file
     return "I read the instructions.";
   }
 
   public static int calculateFrequency(TreeNode root, int target) {
+    // solved as detailed in the README.md file
     return 0x00b259;
   }
 }
