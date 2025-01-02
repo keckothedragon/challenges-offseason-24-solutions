@@ -76,6 +76,8 @@ public class Challenge4 {
               "Wrist is not within tolerance after 3 seconds. Expected: %f, Actual: %f",
               angle, Units.radiansToDegrees(inputs.angleRad)));
       myAssert(
+          // i messed up and forgot to convert units when making this test
+          // you can hack this challenge by just returning true on withinTolerance
           inputs.angleRad - desiredAngle.getRadians() < DELTA,
           String.format(
               "Don't be cheeky with me. You can't just make withinTolerance return true and expect to pass the test. Expected: %f, Actual: %f",

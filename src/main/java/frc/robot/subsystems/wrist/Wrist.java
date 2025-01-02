@@ -8,22 +8,21 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Wrist extends SubsystemBase {
+  // create members as defined in the README
   private WristIO m_io;
   private PIDController m_controller;
   public final WristInputsAutoLogged m_inputs;
 
-  final double TOLERANCE_DEG = 3;
-
   public Wrist(WristIO io, PIDController controller) {
+    // instantiate members
     m_io = io;
     m_controller = controller;
     m_inputs = new WristInputsAutoLogged();
-
-    m_controller.setTolerance(TOLERANCE_DEG);
   }
 
   @Override
   public void periodic() {
+    // update inputs
     m_io.updateInputs(m_inputs);
 
     // since we store setpoint in the controller we only need to pass one value to calculate()
@@ -39,6 +38,8 @@ public class Wrist extends SubsystemBase {
   }
 
   public Command setDesiredAngleCommand(Rotation2d angle) {
+    // same as last challenge we use Commands.runOnce to create a command to set the desired angle
+    // when scheduled
     return Commands.runOnce(() -> setDesiredAngle(angle));
   }
 
@@ -49,6 +50,7 @@ public class Wrist extends SubsystemBase {
   }
 
   public WristInputsAutoLogged getInputs() {
+    // self-explanatory
     return m_inputs;
   }
 }
