@@ -78,7 +78,7 @@ public class Challenge2 {
     for (double velocity : velocities) {
       var state = motor.getSimState();
       state.setRotorVelocity(velocity);
-      Timer.delay(0.040);
+      Timer.delay(0.080);
 
       double output = armIO.getVelocityRadiansPerSecond();
       double expected = Units.rotationsToRadians(velocity);
