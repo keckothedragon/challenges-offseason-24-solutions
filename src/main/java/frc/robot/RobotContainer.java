@@ -42,7 +42,7 @@ public class RobotContainer {
   }
 
   private void configureSubsystems() {
-    // this self-explanatory
+    // instantiate Flywheel with FlywheelIONeo and PIDController
     m_flywheel =
         new Flywheel(
             new FlywheelIONeo(FlywheelConstants.kMotorPort),
@@ -57,6 +57,7 @@ public class RobotContainer {
     // from README:
     // "Each of these commands should be run a single time when the button is pressed or released."
     // so use onTrue and onFalse
+    // whileTrue and whileFalse are incorrect since they continuously run the command
     m_driverControls
         .runFlywheel()
         .onTrue(m_flywheel.setDesiredVelocityCommand(FlywheelConstants.kVelocitySetpoint))
